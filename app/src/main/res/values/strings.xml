@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Pract1AlbertoGonzalezHernandez</string>
+    <string name="MPlus">M+</string>
+    <string name="M">M</string>
+    <string name="C">C</string>
+    <string name="CE">CE</string>
+    <string name="Plus">+</string>
+    <string name="N9">9</string>
+    <string name="N8">8</string>
+    <string name="N7">7</string>
+    <string name="N6">6</string>
+    <string name="N5">5</string>
+    <string name="N4">4</string>
+    <string name="N3">3</string>
+    <string name="N2">2</string>
+    <string name="N1">1</string>
+    <string name="N0">0</string>
+    <string name="POT">POT</string>
+    <string name="Minus">-</string>
+    <string name="Multiply">*</string>
+    <string name="Root">RAIZ</string>
+    <string name="Mod">%</string>
+    <string name="Divide">/</string>
+    <string name="Dot">.</string>
+    <string name="Equal">=</string>
+    <string name="Off">OFF</string>
+    <string name="PlusMinus">+/-</string>
+</resources>
