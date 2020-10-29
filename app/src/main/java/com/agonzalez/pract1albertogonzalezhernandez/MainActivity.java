@@ -7,16 +7,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-enum Operation{ Add, Subtract, Multiply, Divide, Equal };
-enum AlternativeOperation{ Pow, Sqrt };
+enum Operation{ Add, Subtract, Multiply, Divide, Equal }
+
+enum AlternativeOperation{ Pow, Sqrt, Mod }
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String DOT_CHARACTER = ".";
+    private static final String MINUS_CHARACTER = "-";
 
     private TextView operationResultTv;
-    private Button n1Btn, n2Btn, n3Btn, n4Btn, n5Btn, n6Btn, n7Btn, n8Btn, n9Btn, n0Btn, plusBtn, minusBtn, multiplyBtn, divideBtn,
-            equalBtn, cBtn, doBtn, offBtn, powBtn, sqrtBtn;
 
     private double op1;
     private double op2;
@@ -28,28 +28,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        n1Btn = (Button)findViewById(R.id.n1Button);
-        n2Btn = (Button)findViewById(R.id.n2Button);
-        n3Btn = (Button)findViewById(R.id.n3Button);
-        n4Btn = (Button)findViewById(R.id.n4Button);
-        n5Btn = (Button)findViewById(R.id.n5Button);
-        n6Btn = (Button)findViewById(R.id.n6Button);
-        n7Btn = (Button)findViewById(R.id.n7Button);
-        n8Btn = (Button)findViewById(R.id.n8Button);
-        n9Btn = (Button)findViewById(R.id.n9Button);
-        n0Btn = (Button)findViewById(R.id.n0Button);
-        plusBtn = (Button)findViewById(R.id.plusButton);
-        minusBtn = (Button)findViewById(R.id.minusButton);
-        multiplyBtn = (Button)findViewById(R.id.multiplyButton);
-        divideBtn = (Button)findViewById(R.id.divideButton);
-        equalBtn = (Button)findViewById(R.id.equalButton);
-        cBtn = (Button)findViewById(R.id.cButton);
-        doBtn = (Button)findViewById(R.id.dotButton);
-        powBtn = (Button)findViewById(R.id.potButton);
-        sqrtBtn = (Button)findViewById(R.id.rootButton);
-        offBtn = (Button)findViewById(R.id.offButton);
+        Button n1Btn = findViewById(R.id.n1Button);
+        Button n2Btn = findViewById(R.id.n2Button);
+        Button n3Btn = findViewById(R.id.n3Button);
+        Button n4Btn = findViewById(R.id.n4Button);
+        Button n5Btn = findViewById(R.id.n5Button);
+        Button n6Btn = findViewById(R.id.n6Button);
+        Button n7Btn = findViewById(R.id.n7Button);
+        Button n8Btn = findViewById(R.id.n8Button);
+        Button n9Btn = findViewById(R.id.n9Button);
+        Button n0Btn = findViewById(R.id.n0Button);
+        Button plusBtn = findViewById(R.id.plusButton);
+        Button minusBtn = findViewById(R.id.minusButton);
+        Button multiplyBtn = findViewById(R.id.multiplyButton);
+        Button divideBtn = findViewById(R.id.divideButton);
+        Button equalBtn = findViewById(R.id.equalButton);
+        Button cBtn = findViewById(R.id.cButton);
+        Button ceBtn = findViewById(R.id.ceButton);
+        Button doBtn = findViewById(R.id.dotButton);
+        Button powBtn = findViewById(R.id.potButton);
+        Button sqrtBtn = findViewById(R.id.rootButton);
+        Button offBtn = findViewById(R.id.offButton);
+        Button modBtn = findViewById(R.id.modButton);
+        Button plusMinusBtn = findViewById(R.id.plusMinusButton);
 
-        operationResultTv = (TextView)findViewById(R.id.ResultTextView);
+        operationResultTv = findViewById(R.id.ResultTextView);
         setResultText(0);
 
         n1Btn.setOnClickListener(new View.OnClickListener() {
@@ -148,6 +151,12 @@ public class MainActivity extends AppCompatActivity {
                 clearAll();
             }
         });
+        ceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearPartially();
+            }
+        });
         doBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,10 +175,22 @@ public class MainActivity extends AppCompatActivity {
                 setAlternativeOperation(AlternativeOperation.Sqrt);
             }
         });
+        modBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAlternativeOperation(AlternativeOperation.Mod);
+            }
+        });
         offBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 quitApp();
+            }
+        });
+        plusMinusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alternateSign();
             }
         });
     }
@@ -227,9 +248,28 @@ public class MainActivity extends AppCompatActivity {
         setResultText(0);
     }
 
+    private void clearPartially() {
+        displayNumber = "";
+        setResultText(0);
+    }
+
     private void addDot() {
         if (!displayNumber.isEmpty() && !displayNumber.contains(DOT_CHARACTER)) {
             setNumberValue(DOT_CHARACTER);
+        }
+    }
+
+    private void alternateSign() {
+        if (!displayNumber.isEmpty() || op1 != 0.0) {
+            if (displayNumber.isEmpty()) {
+                displayNumber = String.valueOf(op1);
+            }
+            if(displayNumber.startsWith(MINUS_CHARACTER)) {
+                displayNumber = displayNumber.replace(MINUS_CHARACTER, "");
+            } else {
+                displayNumber = MINUS_CHARACTER + displayNumber;
+            }
+            setResultText(Double.parseDouble(displayNumber));
         }
     }
 
@@ -246,15 +286,14 @@ public class MainActivity extends AppCompatActivity {
             case Sqrt:
                 altOpResult = Math.sqrt(op1);
                 break;
+            case Mod:
+                altOpResult = op1 / 100;
+                break;
         }
         setResultText(altOpResult);
         op1 = altOpResult;
         currOperation = null;
         displayNumber = "";
-    }
-
-    private void calculateRoot() {
-
     }
 
     private void quitApp() {

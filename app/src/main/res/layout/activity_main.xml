@@ -21,8 +21,12 @@
             android:id="@+id/ResultTextView"
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:autoSizeMinTextSize="50sp"
+            android:autoSizeMaxTextSize="112sp"
+            android:autoSizeTextType="uniform"
             android:gravity="center_vertical|end"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display4" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+            android:textSize="112sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
