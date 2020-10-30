@@ -2,6 +2,7 @@ package com.agonzalez.pract1albertogonzalezhernandez;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -45,15 +46,32 @@ public class MainActivity extends AppCompatActivity {
         Button equalBtn = findViewById(R.id.equalButton);
         Button cBtn = findViewById(R.id.cButton);
         Button ceBtn = findViewById(R.id.ceButton);
-        Button doBtn = findViewById(R.id.dotButton);
+        Button dotBtn = findViewById(R.id.dotButton);
         Button powBtn = findViewById(R.id.potButton);
         Button sqrtBtn = findViewById(R.id.rootButton);
         Button offBtn = findViewById(R.id.offButton);
         Button modBtn = findViewById(R.id.modButton);
         Button plusMinusBtn = findViewById(R.id.plusMinusButton);
 
+        int screenOrientation = this.getResources().getConfiguration().orientation;
+
         operationResultTv = findViewById(R.id.ResultTextView);
         setResultText(0);
+
+        if (screenOrientation == Configuration.ORIENTATION_PORTRAIT){
+            ceBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clearPartially();
+                }
+            });
+            offBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    quitApp();
+                }
+            });
+        }
 
         n1Btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,13 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 clearAll();
             }
         });
-        ceBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clearPartially();
-            }
-        });
-        doBtn.setOnClickListener(new View.OnClickListener() {
+        dotBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addDot();
@@ -179,12 +191,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setAlternativeOperation(AlternativeOperation.Mod);
-            }
-        });
-        offBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quitApp();
             }
         });
         plusMinusBtn.setOnClickListener(new View.OnClickListener() {

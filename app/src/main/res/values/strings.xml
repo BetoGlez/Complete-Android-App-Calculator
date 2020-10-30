@@ -23,4 +23,12 @@
     <string name="Equal">=</string>
     <string name="Off">OFF</string>
     <string name="PlusMinus">+/-</string>
+    <string name="ValSquare">X²</string>
+    <string name="Sin">SIN</string>
+    <string name="Cos">COS</string>
+    <string name="Tan">TAN</string>
+    <string name="PiSymbol">Π</string>
+    <string name="Delete">DEL</string>
+    <string name="RootSymbol">√</string>
+    <string name="OneDivideX">1/X</string>
 </resources>
