@@ -34,26 +34,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/mPlusButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="#a6a6a6"
-                android:text="@string/MPlus"
-                android:textColor="#3C3C3C"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/mButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="#a6a6a6"
-                android:text="@string/M"
-                android:textColor="#3C3C3C"
-                android:textStyle="bold" />
-
-            <Button
                 android:id="@+id/cButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -74,6 +54,26 @@
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/offButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="#a6a6a6"
+                android:text="@string/Off"
+                android:textColor="#3C3C3C"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/plusMinusButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="#333333"
+                android:text="@string/PlusMinus"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <Button
                 android:id="@+id/plusButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -81,6 +81,7 @@
                 android:backgroundTint="#FF9D0C"
                 android:text="@string/Plus"
                 android:textStyle="bold" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -241,30 +242,10 @@
                 android:text="@string/Dot" />
 
             <Button
-                android:id="@+id/plusMinusButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="#333333"
-                android:text="@string/PlusMinus"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/offButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="#a6a6a6"
-                android:text="@string/Off"
-                android:textColor="#3C3C3C"
-                android:textStyle="bold" />
-
-            <Button
                 android:id="@+id/equalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:backgroundTint="#FF9D0C"
                 android:text="@string/Equal"
                 android:textStyle="bold" />
