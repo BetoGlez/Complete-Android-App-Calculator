@@ -1,5 +1,6 @@
 package com.agonzalez.pract1albertogonzalezhernandez;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Configuration;
@@ -9,13 +10,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 enum Operation{ Add, Subtract, Multiply, Divide, Equal }
-
-enum AlternativeOperation{ Pow, Sqrt, Mod }
+enum AlternativeOperation{ Pow, Sqrt, Mod, Sin, Cos, Tan, OneDivideX }
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String OP1_KEY = "op1";
+    private static final String OP2_KEY = "op2";
+    private static final String DISPLAY_NUM_KEY = "displayNumber";
+    private static final String CURR_OP_KEY = "currOperation";
     private static final String DOT_CHARACTER = ".";
     private static final String MINUS_CHARACTER = "-";
+    private static final double PI_VALUE = 3.14159;
 
     private TextView operationResultTv;
 
@@ -52,12 +57,25 @@ public class MainActivity extends AppCompatActivity {
         Button offBtn = findViewById(R.id.offButton);
         Button modBtn = findViewById(R.id.modButton);
         Button plusMinusBtn = findViewById(R.id.plusMinusButton);
+        Button sinBtn = findViewById(R.id.sinBtn);
+        Button cosBtn = findViewById(R.id.cosBtn);
+        Button tanBtn = findViewById(R.id.tanBtn);
+        Button oneDivideXBtn = findViewById(R.id.oneDivideXBtn);
+        Button piSymbolBtn = findViewById(R.id.piSymbolBtn);
+        Button delBtn = findViewById(R.id.delBtn);
+        operationResultTv = findViewById(R.id.ResultTextView);
+
+        setResultText(0);
+        if(savedInstanceState != null) {
+            op1 = savedInstanceState.getDouble(OP1_KEY);
+            op2 = savedInstanceState.getDouble(OP2_KEY);
+            displayNumber = savedInstanceState.getString(DISPLAY_NUM_KEY);
+            currOperation = (Operation)savedInstanceState.get(CURR_OP_KEY);
+            String currentDisplay = !displayNumber.isEmpty() ? displayNumber : op1 != 0 ? String.valueOf(op1) : "0";
+            setResultText((Double.parseDouble(currentDisplay)));
+        }
 
         int screenOrientation = this.getResources().getConfiguration().orientation;
-
-        operationResultTv = findViewById(R.id.ResultTextView);
-        setResultText(0);
-
         if (screenOrientation == Configuration.ORIENTATION_PORTRAIT){
             ceBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -69,6 +87,43 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     quitApp();
+                }
+            });
+        } else if (screenOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            sinBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    performAlternativeOperation(AlternativeOperation.Sin);
+                }
+            });
+            cosBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    performAlternativeOperation(AlternativeOperation.Cos);
+                }
+            });
+            tanBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    performAlternativeOperation(AlternativeOperation.Tan);
+                }
+            });
+            oneDivideXBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    performAlternativeOperation(AlternativeOperation.OneDivideX);
+                }
+            });
+            piSymbolBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setPiNumber();
+                }
+            });
+            delBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteNumber();
                 }
             });
         }
@@ -178,19 +233,19 @@ public class MainActivity extends AppCompatActivity {
         powBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setAlternativeOperation(AlternativeOperation.Pow);
+                performAlternativeOperation(AlternativeOperation.Pow);
             }
         });
         sqrtBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setAlternativeOperation(AlternativeOperation.Sqrt);
+                performAlternativeOperation(AlternativeOperation.Sqrt);
             }
         });
         modBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setAlternativeOperation(AlternativeOperation.Mod);
+                performAlternativeOperation(AlternativeOperation.Mod);
             }
         });
         plusMinusBtn.setOnClickListener(new View.OnClickListener() {
@@ -199,6 +254,16 @@ public class MainActivity extends AppCompatActivity {
                 alternateSign();
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putDouble(OP1_KEY, op1);
+        outState.putDouble(OP2_KEY, op1);
+        outState.putString(DISPLAY_NUM_KEY, displayNumber);
+        outState.putSerializable(CURR_OP_KEY, currOperation);
+
+        super.onSaveInstanceState(outState);
     }
 
     private void setNumberValue(String number) {
@@ -265,6 +330,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void deleteNumber() {
+        if (!displayNumber.isEmpty() && displayNumber.length() > 0) {
+            displayNumber = displayNumber.substring(0, displayNumber.length() - 1);
+            setResultText((Double.parseDouble(displayNumber.isEmpty() ? "0" : displayNumber)));
+        }
+    }
+
+    private void setPiNumber() {
+        displayNumber = String.valueOf(PI_VALUE);
+        setResultText(PI_VALUE);
+    }
+
     private void alternateSign() {
         if (!displayNumber.isEmpty() || op1 != 0.0) {
             if (displayNumber.isEmpty()) {
@@ -279,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setAlternativeOperation(AlternativeOperation alternativeOp) {
+    private void performAlternativeOperation(AlternativeOperation alternativeOp) {
         if (op1 == 0.0 && !displayNumber.isEmpty()) {
             op1 = Double.parseDouble(displayNumber);
         }
@@ -294,6 +371,18 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case Mod:
                 altOpResult = op1 / 100;
+                break;
+            case Sin:
+                altOpResult = Math.sin(Math.toRadians(op1));
+                break;
+            case Cos:
+                altOpResult = Math.cos(Math.toRadians(op1));
+                break;
+            case Tan:
+                altOpResult = Math.tan(Math.toRadians(op1));
+                break;
+            case OneDivideX:
+                altOpResult = 1 / op1;
                 break;
         }
         setResultText(altOpResult);
